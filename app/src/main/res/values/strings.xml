@@ -19,4 +19,6 @@
     <string name="books_borrowed_by_user">Books borrowed by Mike:</string>
     <string name="refresh">Refresh</string>
     <string name="young_users">Young users:</string>
+    <string name="btn_refresh">REFRESH:</string>
+
 </resources>

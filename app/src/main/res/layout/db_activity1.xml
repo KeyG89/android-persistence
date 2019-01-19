@@ -44,6 +44,13 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="8dp" />
 
+            <Button
+                android:id="@+id/btnRefresh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:text="@string/btn_refresh"/>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

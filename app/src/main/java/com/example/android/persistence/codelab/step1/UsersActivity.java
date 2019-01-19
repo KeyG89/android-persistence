@@ -18,10 +18,13 @@ package com.example.android.persistence.codelab.step1;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.android.codelabs.persistence.R;
 import com.example.android.persistence.codelab.db.AppDatabase;
+import com.example.android.persistence.codelab.db.Book;
 import com.example.android.persistence.codelab.db.User;
 import com.example.android.persistence.codelab.db.utils.DatabaseInitializer;
 
@@ -33,6 +36,7 @@ public class UsersActivity extends AppCompatActivity {
     private AppDatabase mDb;
 
     private TextView mYoungUsersTextView;
+    private Button btnRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class UsersActivity extends AppCompatActivity {
         setContentView(R.layout.db_activity1);
 
         mYoungUsersTextView = findViewById(R.id.young_users_tv);
+        btnRefresh = findViewById(R.id.btnRefresh);
 
         // Note: Db references should not be in an activity.
         mDb = AppDatabase.getInMemoryDatabase(getApplicationContext());
@@ -48,6 +53,13 @@ public class UsersActivity extends AppCompatActivity {
         populateDb();
 
         fetchData();
+
+        btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fetchData();
+            }
+        });
     }
 
     @Override
@@ -63,11 +75,17 @@ public class UsersActivity extends AppCompatActivity {
     private void fetchData() {
         // Note: this kind of logic should not be in an activity.
         StringBuilder sb = new StringBuilder();
-        List<User> youngUsers = mDb.userModel().findYoungerThan(35);
+/*       List<User> youngUsers = mDb.userModel().findYoungerThan(35);
         for (User youngUser : youngUsers) {
             sb.append(String.format(Locale.US,
                     "%s, %s (%d)\n", youngUser.lastName, youngUser.name, youngUser.age));
+        }*/
+
+        List<Book> booksBorrowedByName = mDb.bookModel().findBooksBorrowedByNameSync("Mike");
+        for (Book book : booksBorrowedByName){
+            sb.append(book.title+"\n");
         }
+
         mYoungUsersTextView.setText(sb);
     }
 }

@@ -51,12 +51,16 @@ public interface UserDao {
     @Delete
     void deleteUsers(User user1, User user2);
 
-    @Query("SELECT * FROM User WHERE :age == :age") // TODO: Fix this!
-    List<User> findUsersYoungerThan(int age);
+    @Query("SELECT * FROM User WHERE age < :age")
+    List<User> findYoungerThan(int age);
 
     @Query("SELECT * FROM User WHERE age < :age")
     List<User> findUsersYoungerThanSolution(int age);
 
     @Query("DELETE FROM User")
     void deleteAll();
+
+
+
+
 }

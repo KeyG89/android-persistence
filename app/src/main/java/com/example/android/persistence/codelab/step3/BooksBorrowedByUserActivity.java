@@ -16,9 +16,11 @@
 
 package com.example.android.persistence.codelab.step3;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -45,6 +47,7 @@ public class BooksBorrowedByUserActivity extends AppCompatActivity {
         // Get a reference to the ViewModel for this screen.
         mViewModel = ViewModelProviders.of(this).get(BooksBorrowedByUserViewModel.class);
 
+
         // Update the UI whenever there's a change in the ViewModel's data.
         subscribeUiBooks();
     }
@@ -54,12 +57,17 @@ public class BooksBorrowedByUserActivity extends AppCompatActivity {
     }
 
     private void subscribeUiBooks() {
-        // TODO: refresh the list of books when there's new data
-        // mViewModel.books.observe(...
+        // refresh the list of books when there's new data
+        mViewModel.books.observe(this, new Observer<List<Book>>() {
+            @Override
+            public void onChanged(@NonNull final List<Book> books) {
+                showBooksInUi(books, mBooksTextView);
+            }
+        });
     }
 
     @SuppressWarnings("unused")
-    private void showBooksInUi(final @NonNull List<Book> books) {
+    private void showBooksInUi(final @NonNull List<Book> books, TextView textView ) {
         StringBuilder sb = new StringBuilder();
 
         for (Book book : books) {
@@ -67,6 +75,6 @@ public class BooksBorrowedByUserActivity extends AppCompatActivity {
             sb.append("\n");
 
         }
-        mBooksTextView.setText(sb.toString());
+        textView.setText(sb.toString());
     }
 }

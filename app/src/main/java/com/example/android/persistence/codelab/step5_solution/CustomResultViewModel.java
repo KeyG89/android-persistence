@@ -57,6 +57,7 @@ public class CustomResultViewModel extends AndroidViewModel {
         subscribeToDbChanges();
     }
 
+    // Solution already done
     private void subscribeToDbChanges() {
         LiveData<List<LoanWithUserAndBook>> loans
                 = mDb.loanModel().findLoansByNameAfter("Mike", getYesterdayDate());

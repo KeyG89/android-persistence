@@ -52,4 +52,6 @@ public interface LoanDao {
 
     @Query("DELETE FROM Loan")
     void deleteAll();
+
+
 }
